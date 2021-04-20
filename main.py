@@ -27,98 +27,6 @@ for line in open('data/texts.json', 'r'):
 for line in open('data/tags.json', 'r'):
     tags = json.loads(line)
 
-def preprocess_data(raw_data):
-    texts = []
-    tags = []
-    
-    for abstract in raw_data:
-        token_s = []
-        token_e = []
-        label = []
-        read_ab_size = 0
-        s_pos = 0
-        sentence = []
-        label_sub = []
-        s = nltk.tokenize.sent_tokenize(abstract['text'])
-    
-        for span in abstract['spans']:
-            token_s.append(span['start'])
-            token_e.append(span['end'])
-            label.append(span['label'])
-            
-        label_pos = 0
-        for token in abstract['tokens']:
-            
-            sentence.append(token['text'])
-            
-            if (token['start'] >= token_s[label_pos] and token['end'] <= token_e[label_pos]):
-                
-                label_sub.append(label[label_pos])
-                
-                if (token['end'] == token_e[label_pos]) and (len(token_e)-1!=label_pos):
-                   label_pos+=1
-               
-            else:
-                label_sub.append('O')
-             
-            
-            if (s_pos<len(s) and token['end']-1 == len(s[s_pos])-1 + read_ab_size):
-                if ((len(abstract['text']) > read_ab_size + len(s[s_pos])) and abstract['text'][read_ab_size+len(s[s_pos])] == ' '):
-                    read_ab_size += len(s[s_pos])+1
-                else:
-                    read_ab_size += len(s[s_pos])
-                s_pos += 1
-                tags.append(label_sub)
-                texts.append(sentence)
-                label_sub = []
-                sentence = []
-                
-    return texts, tags
-    
-def augment_training_data(texts, tags, limit):
-    te = [[]]
-    ta = [[]]
-    for i in range(len(texts)):
-        a = 0
-        for j in range(len(texts[i])):
-            if j>0 and j<len(tags[i]) and tags[i][j] == 'O' and a<limit:
-                r = random.randint(0,10)
-                if r<2:
-                    te.append(copy.deepcopy(texts[i]))
-                    ta.append(copy.deepcopy(tags[i]))
-                    
-                    del te[-1][j]
-                    del ta[-1][j]
-                    a+=1
-                for k in range(len(texts[i])-(j+1)):
-                    if j+k<len(tags[i]) and tags[i][j+k] == 'O' and a<limit:
-                        r = random.randint(0,20)
-                        if r<1:
-                            te.append(copy.deepcopy(texts[i]))
-                            ta.append(copy.deepcopy(tags[i]))
-                            res = texts[i][j]
-                            te[-1][j] = te[-1][j+k]
-                            te[-1][j+k] = res
-                            a+=1
-    del te[0]
-    del ta[0]
-    te = texts + te
-    ta = tags + ta
-    return te, ta
-
-def encode_tags(tags, encodings):
-    labels = [[tag2id[tag] for tag in doc] for doc in tags]
-    encoded_labels = []
-    for doc_labels, doc_offset in zip(labels, encodings.offset_mapping):
-        # create an empty array of -100
-        doc_enc_labels = np.ones(len(doc_offset),dtype=int) * -100
-        arr_offset = np.array(doc_offset)
-
-        # set labels whose first offset position is 0 and the second is not 0
-        doc_enc_labels[(arr_offset[:,0] == 0) & (arr_offset[:,1] != 0)] = doc_labels
-        encoded_labels.append(doc_enc_labels.tolist())
-
-    return encoded_labels
 
 def encode_tags2(tags, encodings):
     labels = [[tag2id[tag] for tag in doc] for doc in tags]
@@ -210,14 +118,6 @@ for (k, (train_index, test_index)) in enumerate(CV.split(texts,tags)):
     print('\nCrossvalidation fold: {0}/{1}'.format(k+1,5))
 #train_texts, val_texts, train_tags, val_tags = train_test_split(texts, tags, test_size=.2, random_state = 51)
 
-#train_texts, train_tags = augment_training_data(train_texts, train_tags, 5)
-# only for hyperparameter testing!!!
-    '''
-    val_texts = train_texts[300:400] 
-    val_tags = train_tags[300:400]
-    train_texts = train_texts[:100]
-    train_tags = train_tags[:100]
-    '''
     
     unique_tags = set(tag for doc in tags for tag in doc)
     tag2id = {tag: id for id, tag in enumerate(unique_tags)}
@@ -257,7 +157,7 @@ for (k, (train_index, test_index)) in enumerate(CV.split(texts,tags)):
     
     training_args = TrainingArguments(
             output_dir='./results',          # output directory
-            num_train_epochs=9,              # total number of training epochs
+            num_train_epochs=7,              # total number of training epochs
             per_device_train_batch_size=4,  # batch size per device during training
             per_device_eval_batch_size=64,   # batch size for evaluation
             warmup_steps=5,                # number of warmup steps for learning rate scheduler
@@ -309,4 +209,3 @@ for (k, (train_index, test_index)) in enumerate(CV.split(texts,tags)):
     print(result)
     print("Time taken: "+str((time.time()-t1)/60)+" min")
     trainer.save_model(output_dir='./cur_model')
-    #model = DistilBertForTokenClassification.from_pretrained('./cur_model')
