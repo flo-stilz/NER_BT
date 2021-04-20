@@ -24,7 +24,7 @@ from typing import Dict
 raw_data = []
 for line in open('ner_gaucher_GAEDSMPBGNF.jsonl', 'r'):
     raw_data.append(json.loads(line))
-''' 
+'''
 for line in open('texts.json', 'r'):
     texts = json.loads(line)
 for line in open('tags.json', 'r'):
