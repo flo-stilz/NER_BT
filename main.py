@@ -20,14 +20,11 @@ import copy
 import os
 from datasets import load_dataset, load_metric
 from typing import Dict
-'''
-raw_data = []
-for line in open('ner_gaucher_GAEDSMPBGNF.jsonl', 'r'):
-    raw_data.append(json.loads(line))
-'''
-for line in open('texts.json', 'r'):
+
+
+for line in open('data/texts.json', 'r'):
     texts = json.loads(line)
-for line in open('tags.json', 'r'):
+for line in open('data/tags.json', 'r'):
     tags = json.loads(line)
 
 def preprocess_data(raw_data):
@@ -201,6 +198,9 @@ def fix_tags(tags):
             if tags[i][j]=='-':
                 tags[i][j]='O'
     return tags
+    
+
+# main:
     
 tags = fix_tags(tags) 
 
