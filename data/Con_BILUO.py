@@ -9,7 +9,6 @@ def preprocess_data():
     for line in open('data.jsonl', 'r'):
         raw_data.append(json.loads(line))
     
-    raw_data = raw_data
     data = []
     for abstract in raw_data:
         token_s = []
