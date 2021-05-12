@@ -95,9 +95,6 @@ def compute_metrics(pred):
             'precision': precision,
             'recall': recall,
             'f1': f1,}
-    
-def model_init():
-    return BertForTokenClassification.from_pretrained("bert-base-cased", num_labels=len(unique_tags), return_dict=True)
 
 def fix_tag_problems(tags, texts):
     # removes sentences with overlapping entities
@@ -228,3 +225,12 @@ t1 = time.time()
 result = trainer.evaluate()
 print(result)
 print("Time taken: "+str((time.time()-t1)/60)+" min")
+
+
+sequence = "Oculomotor apraxia may be idiopathic or a symptom of a variety of diseases. In Gaucher disease, oculomotor deficit is characterized by a failure of volitional horizontal gaze with preservation of vertical movements. We present 2 sisters, 6 1/2 and 5 1/2 years of age, in whom the presenting sign was oculomotor apraxia. Oculomotor apraxia has not been previously reported as the presenting manifestation of Gaucher disease."
+sequence2 = "Gaucher's disease has been associated with plasma cell dyscrasias. A patient had Gaucher's disease, nephrotic syndrome, and systemic amyloidosis. Plasmacytosis in the bone marrow, the presence of light chains in the urine and renal glomeruli, and the finding of low circulating immunoglobulin levels suggest that the amyloid in this patient is related to a plasma cell dyscrasia."
+tokens = tokenizer.tokenize(tokenizer.decode(tokenizer.encode(sequence)))
+inputs = tokenizer.encode(sequence, return_tensors="pt")
+outputs = model(inputs).logits
+predictions = torch.argmax(outputs, dim=2)
+print([(token, id2tag[prediction]) for token, prediction in zip(tokens, predictions[0].numpy())])
