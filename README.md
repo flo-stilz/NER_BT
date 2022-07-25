@@ -4,7 +4,7 @@
 Named Entity Recognition is the task of classifying word sequences in pre-defined classes. This work focuses on using BERT architectures to classify important medical classes like e.g. "Diagnosis", "Symptoms" and so on within medical abstracts for rare diseases.
 
 The project is by [Florian Stilz](https://github.com/flo-stilz/)
-from [Denmarks Technical University](https://www.dtu.dk/english). 
+from the [Technical University of Denmark](https://www.dtu.dk/english). 
 
 ## Results
 
