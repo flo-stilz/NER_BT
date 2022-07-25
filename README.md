@@ -6,8 +6,8 @@
     <col>
     <col>
     <tr>
-        <th rowspan=2>Model</th>
-        <th rowspan=2>F1-Score</th>
+        <th>Model</th>
+        <th>F1-Score</th>
     </tr>
     <tr>
         <td>BioBERT</td>
