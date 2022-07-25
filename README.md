@@ -3,8 +3,16 @@
 ## Introduction
 Named Entity Recognition is the task of classifying word sequences in pre-defined classes. This work focuses on using BERT architectures to classify important medical classes like e.g. "Diagnosis", "Symptoms" and so on within medical abstracts for rare diseases.
 
-The project is by [Florian Stilz](https://github.com/flo-stilz/)
+For additional detail, please see my paper:  
+"[Segmentation of medical records with natural
+language processing tools](https://github.com/flo-stilz/NER_BT/paper_figures/NER_with_BERT_for_medical_abstracts.pdf)"
+The project is by [Florian Stilz](https://github.com/flo-stilz/) and supervised by [Ole Winther](https://olewinther.github.io/)
 from the [Technical University of Denmark](https://www.dtu.dk/english). 
+
+## Dataset
+
+The final dataset contains 186 medical abstracts with
+109 Gaucher abstracts and 76 Fabry abstracts, respectively. [Prodigy] was used for annotating the data.
 
 ## Results
 
