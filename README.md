@@ -16,7 +16,7 @@ The final dataset contains 186 medical abstracts with
 
 ## Results
 
-The final results display the average scores of 10 training runs with the standard deviation denoted next to it.
+The final results display the average scores of 5 training runs with the standard deviation denoted next to it.
 
 <table>
     <col>
