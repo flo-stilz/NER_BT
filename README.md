@@ -1,5 +1,7 @@
 # Named Entity Recognition with BERT on medical abstracts
 
+<p align="center"><img src="paper_figures/Prediction_Results.png" width="800px"/></p>
+
 ## Introduction
 Named Entity Recognition is the task of classifying word sequences in pre-defined classes. This work focuses on using BERT architectures to classify important medical classes like e.g. "Diagnosis", "Symptoms" and so on within medical abstracts for rare diseases.
 
