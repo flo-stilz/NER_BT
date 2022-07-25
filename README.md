@@ -12,9 +12,11 @@ from the [Technical University of Denmark](https://www.dtu.dk/english).
 ## Dataset
 
 The final dataset contains 186 medical abstracts with
-109 Gaucher abstracts and 76 Fabry abstracts, respectively. [Prodigy] was used for annotating the data.
+109 Gaucher abstracts and 76 Fabry abstracts, respectively. [Prodigy](https://prodi.gy/) was used for annotating the data.
 
 ## Results
+
+The final results display the average scores of 10 training runs with the standard deviation denoted next to it.
 
 <table>
     <col>
