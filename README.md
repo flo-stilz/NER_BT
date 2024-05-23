@@ -8,7 +8,7 @@ Named Entity Recognition is the task of classifying word sequences in pre-define
 For additional details, please see my paper:  
 "[Segmentation of medical records with natural
 language processing tools](https://github.com/flo-stilz/NER_BT/blob/main/paper_figures/NER_with_BERT_for%20_medical_abstracts.pdf)"
-The project is by [Florian Stilz](https://github.com/flo-stilz/) and supervised by [Ole Winther](https://olewinther.github.io/)
+The project is by [Florian Stilz](https://flo-stilz.github.io/) and supervised by [Ole Winther](https://olewinther.github.io/)
 from the [Technical University of Denmark](https://www.dtu.dk/english). 
 
 ## Dataset
